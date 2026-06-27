@@ -67,3 +67,9 @@ def project_point(cam: Camera, point_world: wp.vec3):
 
     pixel = wp.vec2(px, py)
     return pixel, valid
+
+@wp.func
+def corner_in_frame(pixel: wp.vec2, img_w: wp.float32, img_h: wp.float32) -> wp.int32:
+    if pixel[0] < 0.0 or pixel[0] > img_w or pixel[1] < 0.0 or pixel[1] > img_h:
+        return 0
+    return 1
