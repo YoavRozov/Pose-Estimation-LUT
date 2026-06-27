@@ -31,13 +31,14 @@ def make_apriltag(tag_id: int, center: wp.vec3, rotation: wp.quat, tag_size: flo
     half = tag_size / 2.0
 
     # TODO: verify that the corners are defined in the same order as the AprilTag library's output.
-    # corners defined in the tag's own local frame (tag lies in its local XY plane,
-    # facing +Z out of the tag face), then rotated + translated into world space
+    # Tag is mounted vertically: local face lies in the XZ plane, with local
+    # +Y as the outward-facing normal. Z varies (top vs bottom edge of tag);
+    # X varies (left vs right), which then gets rotated by yaw (theta about Z).
     local_corners = [
-        wp.vec3(-half,  half, 0.0),  # top-left
-        wp.vec3( half,  half, 0.0),  # top-right
-        wp.vec3( half, -half, 0.0),  # bottom-right
-        wp.vec3(-half, -half, 0.0),  # bottom-left
+        wp.vec3(0.0,  half,  half),  # top-left
+        wp.vec3(0.0, -half,  half),  # top-right
+        wp.vec3(0.0, -half, -half),  # bottom-right
+        wp.vec3(0.0,  half, -half),  # bottom-left
     ]
 
     tag = AprilTag()
