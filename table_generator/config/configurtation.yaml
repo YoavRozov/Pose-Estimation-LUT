@@ -1,0 +1,27 @@
+field_layout_json: "field_layouts/2026_field.json"
+
+camera:
+  fx: 600.0
+  fy: 600.0
+  cx: 320.0
+  cy: 240.0
+  image_width: 640
+  image_height: 480
+  max_range: 7.0
+  tag_size: 0.1651          # meters, full edge length
+
+cam_to_robot:
+  translation: [0.25, 0.0, 0.3]      # x, y, z meters, robot-center frame
+  rotation_quaternion: [0.0, 0.0, 0.0, 1.0]  # x, y, z, w
+
+field_bounds:
+  x_min: 0.0
+  x_max: 16.54
+  y_min: 0.0
+  y_max: 8.21
+
+grid:
+  xy_resolution: 0.05       # meters
+  theta_resolution_deg: 1.0
+
+output_dir: "data/"
