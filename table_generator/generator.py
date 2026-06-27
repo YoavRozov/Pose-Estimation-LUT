@@ -1,7 +1,7 @@
 import warp as wp
 
-from table_generator.apriltag import AprilTag, get_corner
-from table_generator.camera import Camera, corner_in_frame, project_point
+from apriltag import AprilTag, get_corner
+from camera import Camera, corner_in_frame, project_point
 
 @wp.func
 def robot_pose_to_camera_pose(x: wp.float32, y: wp.float32, theta: wp.float32,
@@ -13,18 +13,17 @@ def robot_pose_to_camera_pose(x: wp.float32, y: wp.float32, theta: wp.float32,
     robot_pose_world = wp.transform(robot_pos, robot_rot)
     return wp.transform_multiply(robot_pose_world, cam_to_robot)
 
-
 @wp.kernel
 def sweep_tag_corners(
-    xs: wp.array,
-    ys: wp.array,
-    thetas: wp.array,
+    xs: wp.array(dtype=wp.float32), # type: ignore
+    ys: wp.array(dtype=wp.float32), # type: ignore
+    thetas: wp.array(dtype=wp.float32), # type: ignore
     tag: AprilTag,
     cam_to_robot: wp.transform,
     fx: wp.float32, fy: wp.float32, cx: wp.float32, cy: wp.float32,
     img_w: wp.float32, img_h: wp.float32, max_range: wp.float32,
-    out_corners: wp.array2d,   # (N, 8)
-    out_valid: wp.array,       # (N,)
+    out_corners: wp.array2d(dtype=wp.float32),   # (N, 8) # type: ignore
+    out_valid: wp.array(dtype=wp.int32),       # (N,) # type: ignore
 ):
     """
     Projects the corners of a single AprilTag into the camera's pixel frame for a sweep of robot poses.
@@ -46,7 +45,10 @@ def sweep_tag_corners(
     cam_pose_world = robot_pose_to_camera_pose(xs[tid], ys[tid], thetas[tid], cam_to_robot)
 
     cam = Camera()
-    cam.fx, cam.fy, cam.cx, cam.cy = fx, fy, cx, cy
+    cam.fx = fx
+    cam.fy = fy
+    cam.cx = cx
+    cam.cy = cy
     cam.world_to_cam = wp.transform_inverse(cam_pose_world)
 
     valid = wp.int32(1)
