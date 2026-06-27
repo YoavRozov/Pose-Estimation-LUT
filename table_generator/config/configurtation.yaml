@@ -1,12 +1,12 @@
 field_layout_json: "field_layouts/2026_field.json"
 
 camera:
-  fx: 600.0
-  fy: 600.0
-  cx: 320.0
-  cy: 240.0
-  image_width: 640
-  image_height: 480
+  fx: 1027.045534
+  fy: 1019.595674
+  cx: 647.337245
+  cy: 314.937270
+  image_width: 1280
+  image_height: 720
   max_range: 7.0
   tag_size: 0.1651          # meters, full edge length
 
