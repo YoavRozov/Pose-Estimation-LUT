@@ -1,4 +1,4 @@
-field_layout_json: "field_layouts/2026_field.json"
+field_layout_json: "D:/FRC/Programming/Repos/Pose-Estimation-LUT/table_generator/config/field_layouts/2026_field.json"
 
 camera:
   fx: 1027.045534
@@ -24,4 +24,4 @@ grid:
   xy_resolution: 0.05       # meters
   theta_resolution_deg: 1.0
 
-output_dir: "data/"
+output_dir: "D:/FRC/Programming/Repos/Pose-Estimation-LUT/table_generator/output"
