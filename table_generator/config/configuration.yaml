@@ -12,7 +12,7 @@ camera:
 
 cam_to_robot:
   translation: [0.25, 0.0, 0.3]      # x, y, z meters, robot-center frame
-  rotation_quaternion: [0.0, 0.0, 0.0, 1.0]  # x, y, z, w
+  rotation_quaternion: [0.0, 0.0, 0.0, 1.0]  # x, y, z, w # points forward along robot +X
 
 field_bounds:
   x_min: 0.0
