@@ -46,3 +46,17 @@ def make_apriltag(tag_id: int, center: wp.vec3, rotation: wp.quat, tag_size: flo
     world_corners = [wp.quat_rotate(rotation, c) + center for c in local_corners]
     tag.corner0, tag.corner1, tag.corner2, tag.corner3 = world_corners
     return tag
+
+@wp.func
+def get_tag_normal(tag: AprilTag) -> wp.vec3:
+    """
+    World-space outward-facing normal, derived from the corner winding —
+    consistent with the local +X = outward convention fixed earlier in
+    make_apriltag (cross(corner1-corner0, corner3-corner0) reproduces that
+    same +X direction after rotation, since cross products transform
+    correctly under proper rotations).
+    """
+    edge1 = tag.corner1 - tag.corner0
+    edge2 = tag.corner3 - tag.corner0
+    normal = wp.cross(edge1, edge2)
+    return wp.normalize(normal)

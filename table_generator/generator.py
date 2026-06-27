@@ -1,6 +1,6 @@
 import warp as wp
 
-from apriltag import AprilTag, get_corner
+from apriltag import AprilTag, get_corner, get_tag_normal
 from camera import Camera, corner_in_frame, project_point
 
 @wp.func
@@ -52,6 +52,14 @@ def sweep_tag_corners(
     cam.world_to_cam = wp.transform_inverse(cam_pose_world)
 
     valid = wp.int32(1)
+
+    # --- back-face check ---
+    tag_center = (tag.corner0 + tag.corner1 + tag.corner2 + tag.corner3) * 0.25
+    normal = get_tag_normal(tag)
+    cam_pos = wp.transform_get_translation(cam_pose_world)
+    to_cam = cam_pos - tag_center
+    if wp.dot(to_cam, normal) <= 0.0:
+        valid = 0
 
     for i in range(4):
         corner_world = get_corner(tag, i)
